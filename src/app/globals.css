@@ -1,26 +1,145 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #E0E0E0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Regular.woff2') format('woff2'),
+       url('/fonts/Roboto-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Medium.woff2') format('woff2'),
+       url('/fonts/Roboto-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Bold.woff2') format('woff2'),
+       url('/fonts/Roboto-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Roboto';
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.st0, .st1 {
+  fill: none;
+  stroke: #1e3e92;
+  stroke-miterlimit: 10;
+}
+
+.st1 {
+  stroke-linecap: round;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.glow {
+  font-size: 2rem;
+  color: black;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.glow:hover {
+  color: #164194;
+  text-shadow: 0 0 10px #164194, 0 0 20px #164194, 0 0 30px #164194;
+  box-shadow: 0 0 10px #164194, 0 0 20px #164194, 0 0 30px #164194;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dasharray: 1000;  
+    stroke-dashoffset: 1000; 
+  }
+  100% {
+    stroke-dasharray: 2000;  
+    stroke-dashoffset: 0;    /* La linea viene completamente disegnata */
+  }
+}
+
+.path-animation{
+
+  fill:none;
+  background: #EAEAEA;
+
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+
+}
+
+
+
+.path-animation.animate {
+  fill: none;
+  stroke: #164194;
+  stroke-width: 1;
+ stroke-dasharray: 100000;
+  vector-effect: non-scaling-stroke;
+  animation: draw 10s forwards;
+}
+
+
+
+/* Quando l'elemento è visibile e la classe 'animate' è applicata */
+.fadeInImage.animate {
+
+  animation: fadeIn 11s ease-in-out;
+}
+
+.svg-container {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+/* Aggiungi un'animazione di transizione per la larghezza e la rotazione */
+.linea-animata {
+ 
+  transition: width 1s ease-out, transform 1s linear;
+  opacity: 1;
+}
+
+.linea-nascosta {
+  opacity: 0;
+  width: 0;
 }
