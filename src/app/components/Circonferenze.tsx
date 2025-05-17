@@ -13,12 +13,12 @@ const CirconferenzeEquidistanti = () => {
           <div className="flex justify-center items-center flex-col lg:flex-row">
        
             <div className="flex flex-col items-center relative">
-              <div className="w-28 h-28 rounded-full border-[4px] border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center">
+              <div className="w-28 h-28 rounded-full border-[4px] border-solid border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center">
                 <img src="images/icone/lightning-bolt.svg" className="w-16 h-16" alt="Icona" />
               </div>
               {/* La linea rossa sparisce su schermi piccoli */}
               <div className="hidden lg:block w-1 h-32 bg-[#E20613]"></div>
-              <div className="hidden lg:block w-6 h-6  rounded-full border-[4px] border-[#E20613]"></div>
+              <div className="hidden lg:block w-6 h-6  rounded-full border-[4px] border-solid border-[#E20613]"></div>
             </div>
 
             {/* Colonna 2 - Paragrafo di testo */}
@@ -37,12 +37,12 @@ const CirconferenzeEquidistanti = () => {
           <div className="flex justify-center items-center flex-col lg:flex-row">
             {/* Colonna 1 - Cerchio e Linea rossa */}
             <div className="flex flex-col items-center relative">
-              <div className="w-28 h-28 rounded-full border-[4px]  border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center">
+              <div className="w-28 h-28 rounded-full border-[4px] border-solid  border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center">
                 <img src="images/icone/electrical-panel.svg" className="w-20 h-20" alt="Icona" />
               </div>
               {/* La linea rossa sparisce su schermi piccoli */}
               <div className="hidden lg:block w-1 h-32 bg-[#E20613]"></div>
-              <div className="hidden lg:block w-6 h-6  rounded-full border-[4px] border-[#E20613]"></div>
+              <div className="hidden lg:block w-6 h-6  rounded-full border-[4px] border-solid border-[#E20613]"></div>
             </div>
 
             {/* Colonna 2 - Paragrafo di testo */}
@@ -61,12 +61,12 @@ const CirconferenzeEquidistanti = () => {
           <div className="flex justify-center items-center flex-col lg:flex-row">
             {/* Colonna 1 - Cerchio e Linea rossa */}
             <div className="flex flex-col items-center relative">
-              <div className="w-28 h-28 rounded-full border-[4px]  border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center">
+              <div className="w-28 h-28 rounded-full border-[4px] border-solid  border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center">
                 <img src="images/icone/solar-energy.svg" className="w-14 h-14" alt="Icona" />
               </div>
               {/* La linea rossa sparisce su schermi piccoli */}
               <div className="hidden lg:block w-1 h-32 bg-[#E20613]"></div>
-              <div className="hidden lg:block w-6 h-6  rounded-full border-[4px] border-[#E20613]"></div>
+              <div className="hidden lg:block w-6 h-6  rounded-full border-[4px] border-solid border-[#E20613]"></div>
             </div>
 
             {/* Colonna 2 - Paragrafo di testo */}
@@ -85,12 +85,12 @@ const CirconferenzeEquidistanti = () => {
           <div className="flex justify-center items-center flex-col lg:flex-row">
             {/* Colonna 1 - Cerchio e Linea rossa */}
             <div className="flex flex-col items-center relative">
-              <div className="w-28 h-28 rounded-full border-[4px]  border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center">
+              <div className="w-28 h-28 rounded-full border-[4px] border-solid  border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center">
                 <img src="images/icone/lamp-40.svg" className="w-16 h-16" alt="Icona" />
               </div>
               {/* La linea rossa sparisce su schermi piccoli */}
               <div className="hidden lg:block w-1 h-32 bg-[#E20613]"></div>
-              <div className="hidden lg:block w-6 h-6  rounded-full border-[4px] border-[#E20613]"></div>
+              <div className="hidden lg:block w-6 h-6  rounded-full border-[4px] border-solid border-[#E20613]"></div>
             </div>
 
             {/* Colonna 2 - Paragrafo di testo */}

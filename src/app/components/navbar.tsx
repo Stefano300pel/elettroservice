@@ -127,7 +127,7 @@ function Navbar() {
         <div className={`fixed top-0 w-full h-full bg-[#164194] z-40 transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'} lg:hidden`}></div>
 
         {/* Hamburger Menu (visibile su mobile) */}
-        <div className="lg:hidden absolute top-[38px] right-5 z-50">
+        <div className="lg:hidden absolute top-[34px] right-5 z-50 mb-2">
           <button onClick={toggleMenu} className="flex flex-col justify-center items-center space-y-1 w-8 h-8">
             <span className={`block h-1 w-6 bg-[#164194] transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
             <span className={`block h-1 w-6 bg-[#164194] transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>

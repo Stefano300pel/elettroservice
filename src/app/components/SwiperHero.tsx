@@ -67,17 +67,18 @@ export default function SwiperHero() {
             <div className="absolute inset-0 bg-[rgba(22,65,148,0.4)]" />
 
             <div className="absolute bottom-[20%] left-[8%] right-[8%] text-white text-sm md:text-xl font-semibold text-left">
-              <div className="flex items-start gap-4 max-w-[300px]">
+              <div className="flex items-start gap-4 max-w-[200px] md:max-w-[300px]">
                 <img
                   src="g12.png"
-                  className="w-10 md:w-16 h-auto mb-2"
+                  className="w-10 md:w-16 h-auto mb-2 mot.2"
                   alt="Icona"
                 />
               </div>
-              <p>
-                Elettro Service celebra un traguardo importante: 25 anni di <br /> passione, impegno e innovazione.
-                Il nostro viaggio continua… con <br /> lo stesso entusiasmo del primo giorno !!</p>
-
+              <div className="max-w-[280px] md:max-w-[400px]">
+                <p>
+                  Elettro Service celebra un traguardo importante: 25 anni di passione, impegno e innovazione.
+                  Il nostro viaggio continua… con  lo stesso entusiasmo del primo giorno !!</p>
+              </div>
             </div>
 
           </div>
@@ -93,12 +94,12 @@ export default function SwiperHero() {
 
             <div className="absolute bottom-[20%] left-[8%] right-[8%] text-white text-sm md:text-xl font-semibold text-left">
               <p className="text-[#E20613] mb-2 text-2xl">NOVITÀ</p>
-              <p>
-                Nuovo reparto dedicato alla costruzione e al collaudo di quadri <br ></br> elettrici a bassa e media tensione. Un'area totalmente rinnovata, <br></br> attrezzata con tecnologie all'avanguardia e gestita da un team <br></br> specializzato, per garantire
-                qualità sicurezza e affidabilità in ogni<br></br> progetto. Dalla progettazione al collaudo finale, siamo pronti a <br></br> rispondere alle esigenze di un mercato sempre più dinamico e<br></br> orientato all'innovazione.</p>
+              <div className="max-w-[280px] md:max-w-[500px]">
+                <p>
+                  Nuovo reparto dedicato alla costruzione e al collaudo di quadri elettrici a bassa e media tensione. Un'area totalmente rinnovata,  attrezzata con tecnologie all'avanguardia e gestita da un team specializzato, per garantire
+                  qualità sicurezza e affidabilità in ogni progetto. Dalla progettazione al collaudo finale, siamo pronti a  rispondere alle esigenze di un mercato sempre più dinamico e orientato all'innovazione.</p>
+              </div>
             </div>
-
-
           </div>
         </SwiperSlide>
         {/* Slide 2 */}
