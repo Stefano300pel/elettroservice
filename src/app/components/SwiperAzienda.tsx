@@ -35,7 +35,7 @@ export default function SwiperAzienda() {
             <div className="w-1/3 md:w-1/8 flex lg:justify-center justify-center ml-4 mr-4 md:ml-0 md:mr-0 h-full">
               <img
                 src='./bandiera.jpg'
-                className="object-cover w-[60%] h-full rounded-full border-4 border-[#E20613]  mt-0"
+                className="object-cover w-[60%] h-full rounded-full border-4 border-solid border-[#E20613]  mt-0"
                 alt="Slide 1 - Bandiera"
                 style={{ maxHeight: 'none' }}
               />
