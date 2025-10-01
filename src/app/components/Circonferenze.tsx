@@ -21,24 +21,23 @@ const CirconferenzeEquidistanti = () => {
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-16 items-center justify-center  xl:p-0">
 
-          {/* Cerchio 1 - Opere elettriche (senza link) */}
+
+          {/* Cerchio 1 - Opere elettriche */}
           <div className="flex justify-center items-center flex-col lg:flex-row">
 
             <div className="flex flex-col items-center relative">
-              <div className="w-28 h-28 rounded-full border-[4px] border-solid border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center">
-                <button
-                  onClick={() => handleNavigateToPage()}
-                  className="w-28 h-28 rounded-full border-[4px] border-solid border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center cursor-pointer"
-                >
-                  <img src="images/icone/lightning-bolt.svg" className="w-16 h-16" alt="Icona" />
-                </button>
-              </div>
+              <button
+                onClick={() => handleNavigateToPage()}
+                className="w-28 h-28 rounded-full border-[4px] border-solid border-[#E20613] bg-white hover:shadow-[0_0_0_12px_rgba(255,255,255,0.7)] transition-all duration-300 flex justify-center items-center cursor-pointer"
+              >
+                <img src="images/icone/lightning-bolt.svg" className="w-16 h-16" alt="Icona" />
+              </button>
               <div className="hidden lg:block w-1 h-32 bg-[#E20613]"></div>
-              <div className="hidden lg:block w-6 h-6  rounded-full border-[4px] border-solid border-[#E20613]"></div>
+              <div className="hidden lg:block w-6 h-6 rounded-full border-[4px] border-solid border-[#E20613]"></div>
             </div>
 
-            <div className="text-white pt-[10px] lg:pt-[112px] ">
-              <h3 className="text-[#E20613] text-2xl"><span className="text-white"></span>
+            <div className="text-white pt-[10px] lg:pt-[112px]">
+              <h3 className="text-[#E20613] text-2xl">
                 <button
                   onClick={() => handleNavigateToPage()}
                   className="hover:underline cursor-pointer text-left"
