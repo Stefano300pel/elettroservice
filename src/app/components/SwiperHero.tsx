@@ -60,7 +60,7 @@ export default function SwiperHero() {
         <SwiperSlide>
           <div className="relative w-full h-[65vh] overflow-hidden">
             <img
-              src="A1.jpeg"
+              src="A11.jpeg"
               className="object-cover w-full h-full"
               alt="Slide 1"
             />
@@ -86,7 +86,7 @@ export default function SwiperHero() {
         <SwiperSlide>
           <div className="relative w-full h-[65vh] overflow-hidden">
             <img
-              src="A2.jpeg"
+              src="A22.jpeg"
               className="object-cover w-full h-full"
               alt="Slide 1"
             />
