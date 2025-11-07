@@ -213,8 +213,8 @@ const PreFooter: React.FC = () => {
 
           <ul>
 
-            <li>Sede legale: Via Mario Paitoni, 33 25010 Remedello (BS)</li>
-            <li>Sede operativa:</li>
+           
+            <li>Sede legale e operativa:</li>
             <li>Via Turche, 5 25010 Remedello (BS)</li>
             <li>Tel: 030 99 53 315 </li>
             <li>Fax: 030 95 79 535 </li>

@@ -71,13 +71,13 @@ const PreFooterNo: React.FC = () => {
 
       <div className=" text-black py-8 px-4 rounded-md mb-8 grid grid-cols-1 md:grid-cols-3 gap-8">
 
-      <div className="md:col-span-1"></div>
+        <div className="md:col-span-1"></div>
 
         <div className="md:col-span-1">
 
           <h2 className="text-xl font-semibold text-center text-white">Scrivici per candidarti a una posizione di lavoro</h2>
 
-         
+
           <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-white">Nome</label>
@@ -155,7 +155,7 @@ const PreFooterNo: React.FC = () => {
         </div>
 
         {/* Text Column */}
-    
+
 
       </div>
       <div className="md:col-span-2"></div>
@@ -170,8 +170,7 @@ const PreFooterNo: React.FC = () => {
 
           <ul>
 
-            <li>Sede legale: Via Mario Paitoni, 33 25010 Remedello (BS)</li>
-            <li>Sede operativa:</li>
+            <li>Sede legale e operativa:</li>
             <li>Via Turche, 5 25010 Remedello (BS)</li>
             <li>Tel: 030 99 53 315 </li>
             <li>Fax: 030 95 79 535 </li>
