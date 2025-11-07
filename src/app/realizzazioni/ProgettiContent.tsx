@@ -21,6 +21,7 @@ interface OptimizedImageProps {
     alt: string;
     className?: string;
     onLoad?: () => void;
+    priority?: boolean;
 }
 
 interface ThumbnailGridProps {
@@ -34,10 +35,34 @@ interface ThumbnailGridProps {
     }>>;
 }
 
-// Componente ottimizzato per le immagini con lazy loading e placeholder
-const OptimizedImage: React.FC<OptimizedImageProps> = ({ src, alt, className = "", onLoad, ...props }) => {
+// Componente immagine super ottimizzato ma semplice
+const OptimizedImage: React.FC<OptimizedImageProps> = ({ 
+    src, 
+    alt, 
+    className = "", 
+    onLoad, 
+    priority = false,
+    ...props 
+}) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [hasError, setHasError] = useState(false);
+
+    // Preload con priorità per immagini critiche
+    useEffect(() => {
+        if (priority) {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'image';
+            link.href = src;
+            document.head.appendChild(link);
+            
+            return () => {
+                if (document.head.contains(link)) {
+                    document.head.removeChild(link);
+                }
+            };
+        }
+    }, [src, priority]);
 
     const handleLoad = () => {
         setIsLoaded(true);
@@ -48,61 +73,129 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({ src, alt, className = "
         setHasError(true);
     };
 
+    // Placeholder SVG leggero (200 bytes)
+    const placeholderBase64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNmM2Y0ZjYiLz48L3N2Zz4=";
+
     return (
-        <div className={`relative ${className}`}>
-            {/* Placeholder durante il caricamento */}
+        <div className={`relative overflow-hidden ${className}`}>
+            {/* Placeholder animato durante il caricamento */}
             {!isLoaded && !hasError && (
-                <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-                    <div className="w-8 h-8 border-4 border-gray-300 border-t-[#E20613] rounded-full animate-spin"></div>
-                </div>
+                <>
+                    <img
+                        src={placeholderBase64}
+                        alt=""
+                        className="absolute inset-0 w-full h-full object-cover blur-sm scale-110 transition-opacity duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+                        <div className="w-8 h-8 border-4 border-gray-300 border-t-[#E20613] rounded-full animate-spin"></div>
+                    </div>
+                </>
             )}
             
+            {/* Immagine principale */}
             <img
                 src={src}
                 alt={alt}
-                loading="lazy" // Lazy loading nativo del browser
-                decoding="async" // Decodifica asincrona per performance
+                loading={priority ? "eager" : "lazy"}
+                decoding="async"
+                fetchPriority={priority ? "high" : "auto"}
                 onLoad={handleLoad}
                 onError={handleError}
-                className={`transition-opacity duration-500 ${
-                    isLoaded ? 'opacity-100' : 'opacity-0'
+                className={`transition-all duration-700 ease-out ${
+                    isLoaded 
+                        ? 'opacity-100 scale-100' 
+                        : 'opacity-0 scale-105'
                 } w-full h-full object-cover`}
+                style={{
+                    aspectRatio: '16/9',
+                    willChange: 'opacity, transform'
+                }}
                 {...props}
             />
             
-            {/* Fallback per errori di caricamento */}
+            {/* Fallback per errori */}
             {hasError && (
-                <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
-                    <span className="text-gray-500 text-sm">Immagine non disponibile</span>
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="w-12 h-12 mx-auto mb-2 bg-gray-300 rounded-full flex items-center justify-center">
+                            <span className="text-gray-500 text-sm">⚠</span>
+                        </div>
+                        <span className="text-gray-500 text-xs">Immagine non disponibile</span>
+                    </div>
                 </div>
             )}
         </div>
     );
 };
 
-// Hook per il precaricamento di TUTTE le immagini delle categorie visibili
-const useImagePreloader = (imagesToPreload: string[]) => {
+// Hook per precaricamento batch controllato
+const useImageBatchPreloader = (imagesToPreload: string[], batchSize = 3) => {
     useEffect(() => {
         if (imagesToPreload.length === 0) return;
-        
-        const preloadPromises = imagesToPreload.map((imageSrc: string) => {
-            return new Promise<void>((resolve) => {
-                const img = new Image();
-                img.onload = () => resolve();
-                img.onerror = () => resolve(); // Risolvi anche in caso di errore per non bloccare
-                img.src = imageSrc;
-            });
-        });
 
-        Promise.all(preloadPromises);
-    }, [imagesToPreload]);
+        let currentBatch = 0;
+        
+        const preloadBatch = async (batch: string[]) => {
+            const promises = batch.map((imageSrc: string) => {
+                return new Promise<void>((resolve) => {
+                    const img = new Image();
+                    const timeout = setTimeout(() => resolve(), 3000); // Timeout 3s
+                    
+                    img.onload = () => {
+                        clearTimeout(timeout);
+                        resolve();
+                    };
+                    img.onerror = () => {
+                        clearTimeout(timeout);
+                        resolve();
+                    };
+                    img.src = imageSrc;
+                });
+            });
+
+            await Promise.all(promises);
+        };
+
+        const processAllBatches = async () => {
+            while (currentBatch * batchSize < imagesToPreload.length) {
+                const start = currentBatch * batchSize;
+                const end = Math.min(start + batchSize, imagesToPreload.length);
+                const batch = imagesToPreload.slice(start, end);
+                
+                await preloadBatch(batch);
+                currentBatch++;
+                
+                // Pausa tra batch per non sovraccaricare
+                if (end < imagesToPreload.length) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+            }
+        };
+
+        // Avvia dopo 100ms per non bloccare il render
+        const timer = setTimeout(processAllBatches, 100);
+        return () => clearTimeout(timer);
+    }, [imagesToPreload, batchSize]);
 };
 
-// Componente per le thumbnail ottimizzate - SEMPRE PRE-CARICATE
+// Thumbnail con caricamento graduale
 const ThumbnailGrid: React.FC<ThumbnailGridProps> = ({ projects, currentSlide, categoryName, setCurrentSlides }) => {
+    const [visibleCount, setVisibleCount] = useState(3); // Inizia con 3 thumbnail
+    
+    // Mostra gradualmente più thumbnail
+    useEffect(() => {
+        if (visibleCount >= projects.length) return;
+        
+        const timer = setTimeout(() => {
+            setVisibleCount(prev => Math.min(prev + 2, projects.length));
+        }, 150);
+        
+        return () => clearTimeout(timer);
+    }, [visibleCount, projects.length]);
+
     return (
         <div className="flex gap-4 mt-6 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300">
-            {projects.map((project, index) => {
+            {projects.slice(0, visibleCount).map((project, index) => {
                 const isActive = currentSlide === index;
                 
                 return (
@@ -112,18 +205,29 @@ const ThumbnailGrid: React.FC<ThumbnailGridProps> = ({ projects, currentSlide, c
                         className={`flex-shrink-0 w-28 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
                             isActive
                                 ? 'border-[#E20613] scale-105 shadow-lg'
-                                : 'border-gray-300 hover:border-[#164194] opacity-70 hover:opacity-100 hover:scale-102'
+                                : 'border-gray-300 hover:border-[#164194] opacity-70 hover:opacity-100'
                         }`}
+                        style={{
+                            animation: `slideUp 0.4s ease-out ${index * 0.05}s both`
+                        }}
                     >
-                        {/* Tutte le thumbnail vengono sempre caricate */}
                         <OptimizedImage
                             src={project.image}
                             alt={project.title || `Thumbnail progetto ${index + 1}`}
                             className="w-full h-full"
+                            priority={index < 2} // Prime 2 thumbnail prioritarie
                         />
                     </button>
                 );
             })}
+            
+            {/* Skeleton per thumbnail in arrivo */}
+            {Array.from({ length: projects.length - visibleCount }).map((_, index) => (
+                <div
+                    key={`skeleton-${index}`}
+                    className="flex-shrink-0 w-28 h-20 rounded-xl border-2 border-gray-200 bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse"
+                />
+            ))}
         </div>
     );
 };
@@ -140,7 +244,6 @@ export default function ProgettiContent() {
 
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-    // Definizione delle categories
     const categories = {
         'Quadristica': [
             {
@@ -278,23 +381,27 @@ export default function ProgettiContent() {
 
     const [selectedFilter, setSelectedFilter] = useState<keyof typeof categories | 'Tutti'>('Tutti');
 
-    // Precaricamento intelligente delle immagini
+    // Precaricamento intelligente con priorità
     const getImagesToPreload = (): string[] => {
         const images: string[] = [];
+        const highPriorityImages: string[] = [];
         
         (Object.entries(categories) as [keyof typeof categories, Project[]][]).forEach(([categoryName, projects]) => {
             if (selectedFilter === 'Tutti' || selectedFilter === categoryName) {
-                // Precarica TUTTE le immagini delle categorie visibili
-                projects.forEach(project => {
-                    images.push(project.image);
+                projects.forEach((project, index) => {
+                    if (index === currentSlides[categoryName] || index === (currentSlides[categoryName] + 1) % projects.length) {
+                        highPriorityImages.push(project.image);
+                    } else {
+                        images.push(project.image);
+                    }
                 });
             }
         });
         
-        return images;
+        return [...highPriorityImages, ...images];
     };
 
-    useImagePreloader(getImagesToPreload());
+    useImageBatchPreloader(getImagesToPreload(), 2);
 
     useEffect(() => {
         if (!searchParams) return;
@@ -324,18 +431,28 @@ export default function ProgettiContent() {
         }));
     };
 
-    // Gestione click su progetto per aprire modal
     const openProjectModal = (project: Project) => {
         setSelectedProject(project);
-        // Precarica immagine del modal
-        const img = new Image();
-        img.src = project.image;
     };
 
     return (
         <>
             <Navbar />
             <SwiperHero />
+            
+            {/* CSS per animazioni */}
+            <style jsx>{`
+                @keyframes slideUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `}</style>
             
             <div className="bg-white min-h-screen">
                 {/* Filter Section */}
@@ -377,27 +494,26 @@ export default function ProgettiContent() {
                                 className="mb-16"
                                 ref={(el) => { sectionRefs.current[categoryName] = el; }}
                             >
-                                {/* Carousel Container - Centered */}
                                 <div className="max-w-5xl mx-auto">
-                                    {/* Category Title */}
                                     <h2 className="text-3xl font-bold text-[#164194] mb-8 uppercase">{categoryName}</h2>
                                     <div className="relative group">
-                                        {/* Previous Button */}
                                         <button
                                             onClick={() => prevSlide(categoryName)}
-                                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-[#E20613] text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#c00510] hover:scale-110 -translate-x-1/2"
+                                            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-[#E20613] text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#c00510] hover:scale-110 -translate-x-1/2"
                                             aria-label="Immagine precedente"
                                         >
                                             <ChevronLeft size={24} />
                                         </button>
 
-                                        {/* Main Slide */}
                                         <div className="overflow-hidden rounded-2xl shadow-lg">
                                             <div
-                                                className="flex transition-transform duration-500 ease-in-out"
-                                                style={{ transform: `translateX(-${currentSlides[categoryName] * 100}%)` }}
+                                                className="flex transition-transform duration-500 ease-out"
+                                                style={{ 
+                                                    transform: `translateX(-${currentSlides[categoryName] * 100}%)`,
+                                                    willChange: 'transform'
+                                                }}
                                             >
-                                                {projects.map((project) => (
+                                                {projects.map((project, index) => (
                                                     <div key={project.id} className="min-w-full">
                                                         <div 
                                                             className="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100 relative cursor-pointer hover:shadow-xl transition-shadow duration-300"
@@ -408,12 +524,12 @@ export default function ProgettiContent() {
                                                                     src={project.image}
                                                                     alt={project.title || 'Progetto'}
                                                                     className="w-full h-full"
+                                                                    priority={index === currentSlides[categoryName]}
                                                                 />
                                                                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 text-white">
                                                                     <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
                                                                     <p className="text-lg opacity-90">{project.description}</p>
                                                                 </div>
-                                                                {/* Hover overlay */}
                                                                 <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                                                     <span className="text-white font-semibold text-lg">Visualizza Dettagli</span>
                                                                 </div>
@@ -424,17 +540,15 @@ export default function ProgettiContent() {
                                             </div>
                                         </div>
 
-                                        {/* Next Button */}
                                         <button
                                             onClick={() => nextSlide(categoryName)}
-                                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-[#E20613] text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#c00510] hover:scale-110 translate-x-1/2"
+                                            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-[#E20613] text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#c00510] hover:scale-110 translate-x-1/2"
                                             aria-label="Immagine successiva"
                                         >
                                             <ChevronRight size={24} />
                                         </button>
                                     </div>
 
-                                    {/* Optimized Thumbnail Preview */}
                                     <ThumbnailGrid 
                                         projects={projects}
                                         currentSlide={currentSlides[categoryName]}
@@ -446,7 +560,7 @@ export default function ProgettiContent() {
                         ))}
                 </div>
 
-                {/* Enhanced Modal */}
+                {/* Modal */}
                 {selectedProject && (
                     <div 
                         className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 backdrop-blur-sm" 
@@ -461,6 +575,7 @@ export default function ProgettiContent() {
                                     src={selectedProject.image}
                                     alt={selectedProject.title}
                                     className="w-full h-80 md:h-96 rounded-t-2xl"
+                                    priority={true}
                                 />
                                 <button
                                     onClick={() => setSelectedProject(null)}
@@ -489,7 +604,6 @@ export default function ProgettiContent() {
                     </div>
                 )}
 
-                {/* CTA Section */}
                 <div className="bg-[#164194] text-white py-16 px-[5%] text-center">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">Hai un progetto in mente?</h2>
                     <p className="text-xl mb-8 max-w-2xl mx-auto">Contattaci per una consulenza gratuita e trasforma la tua idea in realtà</p>
