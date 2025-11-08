@@ -249,132 +249,131 @@ export default function ProgettiContent() {
             {
                 id: 5,
                 image: "./QUADRI/image00015.jpeg",
-                title: "Quadro Elettrico Industriale",
-                description: "Installazione quadro elettrico per impianto industriale",
-                detailedDescription: "Progettazione e installazione di quadro elettrico per impianto industriale con protezioni differenziali e sistemi di controllo avanzati."
+               
+               
+               
             },
             {
                 id: 6,
                 image: "./QUADRI/image00017.jpeg",
-                title: "Sistema di Controllo Automatico",
-                description: "Quadro di controllo con automazione PLC",
-                detailedDescription: "Implementazione di sistema di controllo automatico con PLC per ottimizzazione dei processi produttivi."
+               
+               
+               
             },
             {
                 id: 7,
                 image: "./QUADRI/image00018.jpeg",
-                title: "Quadro di Distribuzione",
-                description: "Quadro di distribuzione principale",
-                detailedDescription: "Installazione di quadro di distribuzione principale con sistemi di monitoraggio e protezione integrati."
+              
+              
+              
             },
             {
                 id: 8,
                 image: "./QUADRI/image00039.jpeg",
-                title: "Impianto Elettrico Commerciale",
-                description: "Quadristica per edificio commerciale",
-                detailedDescription: "Progettazione completa della quadristica per edificio commerciale con sistemi di emergenza e backup."
+              
+              
+              
             },
             {
                 id: 9,
                 image: "./QUADRI/image00047.jpeg",
-                title: "Sistema di Protezione",
-                description: "Quadro con protezioni avanzate",
-                detailedDescription: "Installazione di quadro elettrico con protezioni avanzate e sistemi di sicurezza per ambienti critici."
+              
+              
+              
             },
             {
                 id: 10,
                 image: "./QUADRI/image00039.jpeg",
-                title: "Automazione Industriale",
-                description: "Quadro per automazione processo",
-                detailedDescription: "Sistema di quadristica per automazione di processo industriale con interfaccia HMI."
+              
+              
+              
             },
             {
                 id: 11,
                 image: "./QUADRI/IMG_3240.jpg",
-                title: "Manutenzione Quadri",
-                description: "Servizio di manutenzione specializzata",
-                detailedDescription: "Servizio di manutenzione preventiva e correttiva su quadri elettrici esistenti."
+              
+              
+              
             }
         ] as Project[],
         'Fotovoltaico': [
             {
                 id: 12,
                 image: "./FVT/20250610_152738.jpg",
-                title: "Impianto Fotovoltaico Residenziale",
-                description: "Installazione su tetto residenziale 6kW",
-                detailedDescription: "Impianto fotovoltaico residenziale da 6kW con ottimizzatori di potenza e sistema di monitoraggio in tempo reale."
+              
+                
             },
             {
                 id: 13,
                 image: "./FVT/Foto4.jpg",
-                title: "Impianto Commerciale",
-                description: "Sistema fotovoltaico per azienda",
-                detailedDescription: "Installazione di impianto fotovoltaico commerciale da 50kW per riduzione dei costi energetici aziendali."
+               
+               
+               
             },
             {
                 id: 14,
                 image: "./FVT/image00004.jpeg",
-                title: "Pannelli ad Alta Efficienza",
-                description: "Installazione pannelli monocristallini",
-                detailedDescription: "Impianto con pannelli monocristallini ad alta efficienza per massimizzare la produzione energetica."
+               
+               
+               
             },
             {
                 id: 15,
                 image: "./FVT/IMG-20250723-WA0031.jpg",
-                title: "Sistema con Storage",
-                description: "Fotovoltaico con accumulo batterie",
-                detailedDescription: "Impianto fotovoltaico con sistema di accumulo per autoconsumo e backup energetico."
+               
+               
+               
             },
             {
                 id: 16,
                 image: "./FVT/Screenshot2025-09-29073734.png",
-                title: "Monitoraggio Avanzato",
-                description: "Sistema di monitoraggio produzione",
-                detailedDescription: "Implementazione di sistema di monitoraggio avanzato per controllo e ottimizzazione della produzione."
+               
+               
+               
             },
             {
                 id: 17,
                 image: "./FVT/WhatsAppImage2021-09-21at17.18.10(2).jpeg",
-                title: "Impianto Industriale",
-                description: "Grande impianto fotovoltaico industriale",
-                detailedDescription: "Progettazione e installazione di impianto fotovoltaico industriale da 200kW per autoconsumo aziendale."
+               
+               
+               
             }
         ] as Project[],
         'Illuminazione': [
             {
                 id: 18,
                 image: "./ILLUMINAZIONE/image00001.jpeg",
-                title: "Illuminazione LED Industriale",
-                description: "Retrofit illuminazione capannone",
-                detailedDescription: "Sostituzione completa dell'illuminazione tradizionale con sistema LED ad alta efficienza per capannone industriale."
+               
+               
+               
             },
             {
                 id: 19,
                 image: "./ILLUMINAZIONE/image00004.jpeg",
-                title: "Illuminazione Stradale",
-                description: "Sistema di illuminazione pubblica",
-                detailedDescription: "Progettazione e installazione di illuminazione stradale LED con controllo intelligente e riduzione consumi."
+               
+               
+               
             },
             {
                 id: 20,
                 image: "./ILLUMINAZIONE/image00012.jpeg",
-                title: "Illuminazione Commerciale",
-                description: "Progetto illuminazione negozio",
-                detailedDescription: "Progettazione illuminazione commerciale per valorizzazione prodotti e comfort visivo clienti."
+               
+               
+               
             },
             {
                 id: 21,
                 image: "./ILLUMINAZIONE/image00013.jpeg",
-                title: "Smart Lighting",
-                description: "Illuminazione intelligente controllata",
-                detailedDescription: "Sistema di illuminazione intelligente con controllo wireless e programmazione automatica."
+               
+               
+               
             },
             {
                 id: 22,
                 image: "./ILLUMINAZIONE/IMG_2850.jpg",
-                title: "Illuminazione di Emergenza",
-                description: "Sistema di illuminazione sicurezza",
-                detailedDescription: "Installazione di sistema di illuminazione di emergenza conforme alle normative di sicurezza."
+               
+               
+               
             }
         ] as Project[]
     } as const;

@@ -28,15 +28,7 @@ export default function SwiperHero() {
 
   return (
     <div className="relative">
-      {/*
-<div className="swiper-button-prev-custom absolute left-4 top-1/2 transform -translate-y-1/2 z-30 cursor-pointer text-white text-3xl select-none">
-  &#10094;
-</div>
 
-<div className="swiper-button-next-custom absolute right-4 top-1/2 transform -translate-y-1/2 z-30 cursor-pointer text-white text-3xl select-none">
-  &#10095;
-</div>
-*/}
 
 
       <Swiper
